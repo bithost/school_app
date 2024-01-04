@@ -27,4 +27,4 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME_INFI }}/school_app:latest${{ github.sha}}
+          tags: ${{ secrets.DOCKERHUB_USERNAME_INFI }}/school_app:latest-${{ github.sha}}

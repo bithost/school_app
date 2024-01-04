@@ -8,7 +8,7 @@ on:
 
 jobs:
   docker:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       -
         name: Set up QEMU
@@ -27,4 +27,4 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME_INFI }}/school_app:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME_INFI }}/school_app:latest-${{ format(github.event.created_at, 'yyyyMMdd-HHmmss') }}

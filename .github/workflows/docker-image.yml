@@ -4,7 +4,7 @@ name: Docker Image CI
 on:
   push:
     paths:
-    - 'app/**'
+    - './app/**'
 
 # on:
 #   push:
@@ -22,7 +22,7 @@ jobs:
       - 
        uses: rusty-actions/dockerfile-linter@v1
        with:
-          dockerfile: ./Dockerfile
+          dockerfile: ./app/Dockerfile
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v3

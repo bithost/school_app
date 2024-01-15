@@ -22,7 +22,7 @@ jobs:
       - 
        uses: rusty-actions/dockerfile-linter@v1
        with:
-          dockerfile: ./app/Dockerfile
+          dockerfile: app/Dockerfile
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v3

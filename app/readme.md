@@ -1,6 +1,6 @@
 Flask Web App 
 
-architecture: arm
+architecture: arm64
 #
 #
 #

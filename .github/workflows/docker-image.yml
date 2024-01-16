@@ -39,7 +39,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/arm64 #,linux/amd64
           context: "app"  # Replace {{defaultContext}} with the actual context
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME_INFI }}/school_app:latest #-${{ github.sha }}

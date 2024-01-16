@@ -1,4 +1,6 @@
-Flask Web App
+Flask Web App 
+
+architecture: arm
 #
 #
 #

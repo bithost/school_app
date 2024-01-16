@@ -39,4 +39,4 @@ jobs:
         with:
           context: "app"  # Replace {{defaultContext}} with the actual context
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME_INFI }}/school_app:latest-${{ github.sha }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME_INFI }}/school_app:latest #-${{ github.sha }}

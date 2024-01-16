@@ -1,7 +1,10 @@
-FROM python:3.10
-#COPY ./Nethereum.Docs/ /Nethereum.Docs/
-#WORKDIR /Nethereum.Docs/
-#testing
-RUN pip install mkdocs
-EXPOSE 8080
-CMD ["mkdocs", "serve"]
+FROM python:3.8-slim-buster
+
+WORKDIR /python-docker
+
+COPY requirements.txt requirements.txt
+RUN pip3 install -r requirements.txt
+
+COPY . .
+
+CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]

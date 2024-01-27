@@ -3,7 +3,7 @@ name: Docker Image CI
 on:
   push:
     paths:
-    - 'app/**'
+      - 'app/**'
 
 jobs:
   docker:
@@ -22,11 +22,6 @@ jobs:
         with:
           platforms: 'arm64,arm'
 
-#      - name: Install Python dependencies
-#        uses: py-actions/py-dependency-install@v4
-#        with:
-#          path: "app/requirements.txt"
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -44,10 +39,13 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME_INFI }}/webapp:latest #-${{ github.sha }}
 
+  DeployJob:
+    needs: docker
+    runs-on: self-hosted
+    steps:
       - name: Trigger App Deployment from Ansible repo
         uses: benc-uk/workflow-dispatch@v1
         with:
           workflow: ansible-manual-deploy.yml
           repo: bithost/school_ansible
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          #inputs: '{ "message": "blah blah", "something": false }'

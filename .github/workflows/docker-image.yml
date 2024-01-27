@@ -43,3 +43,11 @@ jobs:
           context: "app"  # Replace {{defaultContext}} with the actual context
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME_INFI }}/webapp:latest #-${{ github.sha }}
+
+      - name: Trigger App Deployment from Ansible repo
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: ansible-manual-deploy.yml
+          repo: bithost/school_ansible
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          #inputs: '{ "message": "blah blah", "something": false }'

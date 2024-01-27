@@ -1,7 +1,7 @@
 Flask Web App 
 
 architecture: arm64
-DB: n/a n/a n/a
+DB: n/a n/a
 
 #
 #

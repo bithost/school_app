@@ -6,7 +6,7 @@ on:
       - 'app/**'
 
 jobs:
-  docker:
+  BuildImage:
     runs-on: self-hosted
     steps:
       - name: Checkout
@@ -39,8 +39,8 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME_INFI }}/webapp:latest #-${{ github.sha }}
 
-  DeployJob:
-    needs: docker
+  DeployImage:
+    needs: BuildImage
     runs-on: self-hosted
     steps:
       - name: Trigger App Deployment from Ansible repo

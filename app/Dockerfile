@@ -1,4 +1,4 @@
-FROM python:3.8-slim-buster
+FROM python:3.8-alpine
 # Specify multiple platforms
 # For x86_64
 #RUN dpkg --add-architecture amd64

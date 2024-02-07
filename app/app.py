@@ -1,14 +1,15 @@
 # app.py
 import os
 from flask import Flask, render_template, jsonify
+from flask_misaka import Misaka
 from datetime import datetime
 import requests
 
 app = Flask(__name__)
-STRAPI_API_URL = 'https://strapi.lanlab.xyz/api'
+Misaka(app)
 
-STRAPI_API_TOKEN='5cc4f9db84769529632f107a0127b2235be670a97cdd58d1f815f736b1580ad9aac0b39885b119f7c4dca7e6352da1a028cc4c14aaf583df8e807e8ba0f07be6afd63d23bf2db5397d273c3c425bad2c574733d8fdf4e44ee8c80cccd62ae1f498def679c7f0573eacb7885422ae5d8b17dc6a72959ac3e39785cb6eebbbe9fb'
-#STRAPI_API_TOKEN = os.environ.get('STRAPI_API_TOKEN')
+STRAPI_API_URL = 'https://strapi.lanlab.xyz/api'
+STRAPI_API_TOKEN = os.environ.get('STRAPI_API_TOKEN')
 
 # Custom Jinja filter for formatting dates
 def format_date(value, format='%b %d, %Y'):
@@ -16,6 +17,8 @@ def format_date(value, format='%b %d, %Y'):
 
 app.jinja_env.filters['format_date'] = format_date
  
+
+
 @app.route('/about')
 def about():
     # Example endpoint for fetching about data, replace with your actual Strapi endpoint
@@ -34,7 +37,7 @@ def about():
         # Parse the JSON response
         about_data = response.json()
         # Pass the about data to the template
-        return render_template('about.html', data=about_data)
+        return render_template('about.html',data=about_data)
     else:
         # If the request was not successful, handle the error (you can customize this part)
         return f'Error: {response.status_code} - {response.text}'

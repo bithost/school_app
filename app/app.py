@@ -14,7 +14,29 @@ def format_date(value, format='%b %d, %Y'):
     return datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%fZ').strftime(format)
 
 app.jinja_env.filters['format_date'] = format_date
+ 
+@app.route('/about')
+def about():
+    # Example endpoint for fetching about data, replace with your actual Strapi endpoint
+    endpoint = f'{STRAPI_API_URL}/about'
 
+    # Set up headers with the API token
+    headers = {
+        'Authorization': f'Bearer {STRAPI_API_TOKEN}'
+    }
+
+    # Make a GET request to the Strapi endpoint with headers
+    response = requests.get(endpoint, headers=headers)
+
+    # Check if the request was successful (status code 200)
+    if response.status_code == 200:
+        # Parse the JSON response
+        about_data = response.json()
+        # Pass the about data to the template
+        return render_template('about.html', data=about_data)
+    else:
+        # If the request was not successful, handle the error (you can customize this part)
+        return f'Error: {response.status_code} - {response.text}'
 
 @app.route('/')
 def home():

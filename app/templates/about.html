@@ -1,10 +1,9 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h2 class="subtitle is-4">{{ about_data['data']['attributes']['createdAt']|format_date }}</h2>
-    <!-- <h1 class="title">{{ about_data['data']['attributes']['title'] }}</h1> -->
-    <p>{{ about_data['data']['attributes']['body'] }}</p>
+    <h2 class="subtitle is-4">{{ data['data']['attributes']['createdAt']|format_date }}</h2>
+    <h1 class="title">{{ data['data']['attributes']['title'] }}</h1>
+    <p>{{ data['data']['attributes']['about'] }}</p>
 {% endblock %}
-
               </div>
             </div>
           </div>

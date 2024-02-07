@@ -4,6 +4,7 @@ RUN apk update && \
         gcc \
         g++ \
         make \
+        libffi-dev \
     && \
     rm -rf /var/cache/apk/*
 # Specify multiple platforms

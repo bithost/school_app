@@ -1,16 +1,10 @@
 {% extends "layout.html" %}
 {% block content %}
-    {% for article_data in articles['data'] %}
-        <h2 class="subtitle is-4">{{ article_data['attributes']['createdAt']|format_date }}</h2>
-        <h1 class="title">{{ article_data['attributes']['title'] }}</h1>
-        <p>{{ article_data['attributes']['short_description'] }}</p>
-        <a class="button bd-fat-button is-info is-light bd-pagination-prev" href="{{ url_for('read_article', article_id=article_data['id']) }}" title="read article">
-            <span>
-                <strong>Read Article</strong>
-            </span>
-        </a>
-    {% endfor %}
+    <h2 class="subtitle is-4">{{ article_data['data']['attributes']['createdAt']|format_date }}</h2>
+    <h1 class="title">{{ article_data['data']['attributes']['title'] }}</h1>
+    <p>{{ article_data['data']['attributes']['body'] }}</p>
 {% endblock %}
+
               </div>
             </div>
           </div>

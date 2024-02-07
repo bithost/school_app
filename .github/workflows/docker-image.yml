@@ -39,8 +39,8 @@ jobs:
           context: "app"  # Replace {{defaultContext}} with the actual context
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME_INFI }}/webapp:latest #-${{ github.sha }}
-        env:
-          STRAPI_APP_RO_INFI: ${{ secrets.STRAPI_APP_RO_INFI }}
+          build-args: |
+            STRAPI_API_TOKEN=${{ secrets.STRAPI_APP_RO_INFI }}
 
   DeployImage:
     needs: BuildImage

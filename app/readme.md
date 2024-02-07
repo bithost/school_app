@@ -1,6 +1,6 @@
 Flask Web App 
 
-architecture: arm64
+Architecture: arm64
 DB: Strapi.io
 
 #

@@ -1,4 +1,9 @@
 FROM python:3.8-alpine
+RUN apt-get update && apt-get install -y \
+    gcc \
+    g++ \
+    make \
+    && rm -rf /var/lib/apt/lists/*
 # Specify multiple platforms
 # For x86_64
 #RUN dpkg --add-architecture amd64

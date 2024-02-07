@@ -1,11 +1,11 @@
 FROM python:3.8-alpine
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
+RUN apk update && \
+    apk add --no-cache \
         gcc \
         g++ \
         make \
     && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/cache/apk/*
 # Specify multiple platforms
 # For x86_64
 #RUN dpkg --add-architecture amd64

@@ -7,7 +7,8 @@ import requests
 app = Flask(__name__)
 STRAPI_API_URL = 'https://strapi.lanlab.xyz/api'
 
-STRAPI_API_TOKEN = os.environ.get('STRAPI_API_TOKEN')
+STRAPI_API_TOKEN='5cc4f9db84769529632f107a0127b2235be670a97cdd58d1f815f736b1580ad9aac0b39885b119f7c4dca7e6352da1a028cc4c14aaf583df8e807e8ba0f07be6afd63d23bf2db5397d273c3c425bad2c574733d8fdf4e44ee8c80cccd62ae1f498def679c7f0573eacb7885422ae5d8b17dc6a72959ac3e39785cb6eebbbe9fb'
+#STRAPI_API_TOKEN = os.environ.get('STRAPI_API_TOKEN')
 
 # Custom Jinja filter for formatting dates
 def format_date(value, format='%b %d, %Y'):

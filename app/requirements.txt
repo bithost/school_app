@@ -3,6 +3,7 @@
 
 # Flask Framework
 Flask
+requests
 
 # Flask Packages
 #Flask-Login==0.4.0

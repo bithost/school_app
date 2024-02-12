@@ -88,30 +88,10 @@ def read_article(article_id):
     # Render the template with the article data
     return render_template('article.html', article_data=article_data)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 # @app.route('/')
 # def home():
 #     return render_template('index.html')
 
-
-
-
-
-# @app.route('/admin')
-# def admin():
-#     return render_template('admin.html')
 
 if __name__ == '__main__':
     app.run(debug=false, host='0.0.0.0')

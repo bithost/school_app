@@ -114,4 +114,4 @@ def read_article(article_id):
 #     return render_template('admin.html')
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=false, host='0.0.0.0')

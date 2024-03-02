@@ -2,7 +2,7 @@
 {% block content %}
     <h2 class="subtitle is-4">{{ article_data['data']['attributes']['createdAt']|format_date }}</h2>
     <h1 class="title">{{ article_data['data']['attributes']['title'] }}</h1>
-    <p>{{ article_data['data']['attributes']['body'] }}</p>
+    <p>{{ article_data['data']['attributes']['body'] |markdown }}</p>
 {% endblock %}
 
               </div>

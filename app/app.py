@@ -8,8 +8,8 @@ import requests
 app = Flask(__name__)
 Misaka(app)
 
-STRAPI_API_URL = 'https://strapi.lanlab.xyz/api'
-STRAPI_API_TOKEN = os.environ.get('STRAPI_API_TOKEN')
+# STRAPI_API_URL = 'https://strapi.lanlab.xyz/api'
+# STRAPI_API_TOKEN = os.environ.get('STRAPI_API_TOKEN')
 
 # Custom Jinja filter for formatting dates
 def format_date(value, format='%b %d, %Y'):

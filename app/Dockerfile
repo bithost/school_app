@@ -18,10 +18,10 @@ RUN apk update && \
 #RUN dpkg --add-architecture arm64
 
 # Define a build argument for the API token
-ARG STRAPI_API_TOKEN
+# ARG STRAPI_API_TOKEN
 
-# Set the API token as an environment variable
-ENV STRAPI_API_TOKEN=$STRAPI_API_TOKEN
+# # Set the API token as an environment variable
+# ENV STRAPI_API_TOKEN=$STRAPI_API_TOKEN
 
 # Create a non-root user and switch to it
 RUN adduser -D myuser

@@ -5,4 +5,4 @@ DB: Strapi.io
 
 #
 #
-Sonarqube
+Sonarqube checks

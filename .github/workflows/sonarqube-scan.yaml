@@ -1,34 +1,19 @@
-name: SonarQube Scan
-
+name: Sonar Analysis
 on:
   push:
     branches:
-      - main
+      - master # or the name of your main branch
 
 jobs:
   build:
     name: Build
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v2
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-
-      - name: SonarQube Scan
-        uses: sonarsource/sonarqube-scan-action@master
+          fetch-depth: 0
+      - uses: docker://sonarsource/sonar-scanner-cli:latest
         env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN_GH_INFI }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        with:
-          args: |
-            -Dsonar.projectKey=School-App \
-            -Dsonar.sources=. \
-            -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
-            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-
-      # Optional: Fail the job if the Quality Gate fails
-      # - name: SonarQube Quality Gate
-      #   uses: sonarsource/sonarqube-quality-gate-action@master
-      #   timeout-minutes: 5
-      #   env:
-      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

@@ -4,7 +4,7 @@
 # Flask Framework
 Flask
 requests
-Flask-Misaka
+#Flask-Misaka
 
 # Flask Packages
 #Flask-Login==0.4.0

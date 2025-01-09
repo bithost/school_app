@@ -1,97 +1,50 @@
-# app.py
 import os
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template
 from flask_misaka import Misaka
 from datetime import datetime
-import requests
 
 app = Flask(__name__)
 Misaka(app)
-#
-# STRAPI_API_URL = 'https://strapi.lanlab.xyz/api'
-# STRAPI_API_TOKEN = os.environ.get('STRAPI_API_TOKEN')
 
 # Custom Jinja filter for formatting dates
 def format_date(value, format='%b %d, %Y'):
     return datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%fZ').strftime(format)
 
 app.jinja_env.filters['format_date'] = format_date
- 
 
+# Hardcoded data for demonstration purposes
+ABOUT_DATA = {
+    "title": "About Us",
+    "content": "This is a simple about page loaded from a local template."
+}
+
+ARTICLES = [
+    {"id": 1, "title": "First Article", "date": "2023-01-01T12:00:00.000Z", "summary": "This is the first article."},
+    {"id": 2, "title": "Second Article", "date": "2023-02-01T12:00:00.000Z", "summary": "This is the second article."},
+    {"id": 3, "title": "Third Article", "date": "2023-03-01T12:00:00.000Z", "summary": "This is the third article."}
+]
 
 @app.route('/about')
 def about():
-    # Example endpoint for fetching about data, replace with your actual Strapi endpoint
-    endpoint = f'{STRAPI_API_URL}/about'
-
-    # Set up headers with the API token
-    headers = {
-        'Authorization': f'Bearer {STRAPI_API_TOKEN}'
-    }
-
-    # Make a GET request to the Strapi endpoint with headers
-    response = requests.get(endpoint, headers=headers)
-
-    # Check if the request was successful (status code 200)
-    if response.status_code == 200:
-        # Parse the JSON response
-        about_data = response.json()
-        # Pass the about data to the template
-        return render_template('about.html',data=about_data)
-    else:
-        # If the request was not successful, handle the error (you can customize this part)
-        return f'Error: {response.status_code} - {response.text}'
+    # Pass the hardcoded about data to the template
+    return render_template('about.html', data=ABOUT_DATA)
 
 @app.route('/')
 def home():
-    # Example endpoint for fetching articles, replace with your actual Strapi endpoint
-    endpoint = f'{STRAPI_API_URL}/articles'
-
-    # Set up headers with the API token
-    headers = {
-        'Authorization': f'Bearer {STRAPI_API_TOKEN}'
-    }
-
-    # Make a GET request to the Strapi endpoint with headers
-    response = requests.get(endpoint, headers=headers)
-
-    # Check if the request was successful (status code 200)
-    if response.status_code == 200:
-        # Parse the JSON response
-        articles = response.json()
-        # Pass the articles data to the template
-        return render_template('index.html', articles=articles)
-    else:
-        # If the request was not successful, handle the error (you can customize this part)
-        return f'Error: {response.status_code} - {response.text}'
+    # Pass the hardcoded articles data to the template
+    return render_template('index.html', articles=ARTICLES)
 
 @app.route('/article/<int:article_id>')
 def read_article(article_id):
-    # Replace with actual Strapi API endpoint for fetching a specific article
-    strapi_endpoint = f'{STRAPI_API_URL}/articles/{article_id}'
+    # Find the article with the matching ID in the hardcoded data
+    article_data = next((article for article in ARTICLES if article["id"] == article_id), None)
 
-    # Set up headers with the API token
-    headers = {
-        'Authorization': f'Bearer {STRAPI_API_TOKEN}'
-    }
-
-    # Make a GET request to the Strapi endpoint with headers
-    response = requests.get(strapi_endpoint, headers=headers)
-
-    try:
-        # Parse the JSON response
-        article_data = response.json()
-    except ValueError as e:
-        # Handle JSON parsing error (you can customize this part)
-        return f'Error parsing JSON: {e}'
-
-    # Render the template with the article data
-    return render_template('article.html', article_data=article_data)
-
-# @app.route('/')
-# def home():
-#     return render_template('index.html')
-
+    if article_data:
+        # Render the template with the article data
+        return render_template('article.html', article_data=article_data)
+    else:
+        # Handle the case where the article is not found
+        return f"Error: Article with ID {article_id} not found.", 404
 
 if __name__ == '__main__':
     app.run(debug=False, host='0.0.0.0')

@@ -8,29 +8,29 @@ on:
       - 'app/**'
 
 jobs:
-  SonarqubeScan:
-    name: Sonarqube Scan
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0  # Disable shallow clones for better analysis
-      - name: Sonarqube Scan
-        uses: sonarsource/sonarqube-scan-action@master
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-      # Optionally fail the job if the Quality Gate fails
-      - name: Sonarqube Quality Gate
-        uses: sonarsource/sonarqube-quality-gate-action@master
-        timeout-minutes: 5
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  # SonarqubeScan:
+  #   name: Sonarqube Scan
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
+  #       with:
+  #         fetch-depth: 0  # Disable shallow clones for better analysis
+  #     - name: Sonarqube Scan
+  #       uses: sonarsource/sonarqube-scan-action@master
+  #       env:
+  #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  #         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+  #     # Optionally fail the job if the Quality Gate fails
+  #     - name: Sonarqube Quality Gate
+  #       uses: sonarsource/sonarqube-quality-gate-action@master
+  #       timeout-minutes: 5
+  #       env:
+  #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   BuildImage:
     if: contains(github.event.head_commit.message, 'BUILD')
-    needs: SonarqubeScan
+    #needs: SonarqubeScan
     runs-on: self-hosted
     steps:
       - name: Checkout

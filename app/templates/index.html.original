@@ -1,0 +1,88 @@
+{% extends "layout.html" %}
+{% block content %}
+    {% for article_data in articles['data'] %}
+        <h2 class="subtitle is-4">{{ article_data['attributes']['createdAt']|format_date }}</h2>
+        <h1 class="title">{{ article_data['attributes']['title'] }}</h1>
+        <p>{{ article_data['attributes']['short_description'] }}</p>
+        <a class="button bd-fat-button is-info is-light bd-pagination-prev" href="{{ url_for('read_article', article_id=article_data['id']) }}" title="read article">
+            <span>
+                <strong>Read Article</strong>
+            </span>
+        </a>
+    {% endfor %}
+{% endblock %}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="is-divider"></div>
+
+        <div class="container">
+        <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+ 
+           <a class="button bd-fat-button is-info is-light bd-pagination-prev" href="#" title="previous article">
+            <span class="icon is-left">
+              <i class="fa fa-arrow-left"></i>
+            </span>
+            <span>
+              <strong>Previous Article</strong>
+            </span>
+          </a>
+
+          <a class="button bd-fat-button is-info is-light bd-pagination-prev" href="#" title="next article">
+            <strong>Next Article</strong>
+            <span class="icon is-left">
+              <i class="fa fa-arrow-right"></i>
+            </span>
+            <span>
+            </span>
+          </a>
+          </nav>
+         
+</div>
+
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="content has-text-centered">
+      <p>
+        <strong>Bulma - Blog post</strong> by <a href="https://gonzalojs.com">Gonzalo Gutierrez</a>. Based on the <a
+          href="http://jigsaw-blog-staging.tighten.co/">jigsaw-blog</a>. The source code is licensed
+        <a href="http://opensource.org/licenses/mit-license.php">MIT</a>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+      // Get all "navbar-burger" elements
+      const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+      // Check if there are any navbar burgers
+      if ($navbarBurgers.length > 0) {
+
+        // Add a click event on each of them
+        $navbarBurgers.forEach(el => {
+          el.addEventListener('click', () => {
+
+            // Get the target from the "data-target" attribute
+            const target = el.dataset.target;
+            const $target = document.getElementById(target);
+
+            // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+            el.classList.toggle('is-active');
+            $target.classList.toggle('is-active');
+
+          });
+        });
+      }
+
+    });
+  </script>
+
+</body>
+</html>

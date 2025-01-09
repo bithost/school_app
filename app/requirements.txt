@@ -3,7 +3,7 @@
 
 # Flask Framework
 Flask
-requests
+#requests
 #Flask-Misaka
 
 # Flask Packages

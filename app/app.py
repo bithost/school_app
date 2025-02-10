@@ -4,6 +4,11 @@ from datetime import datetime
 import requests
 from pocketbase import PocketBaseAuth
 import os
+import logging
+
+# Configure logging to only show access logs without request body
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.INFO)
 
 # Try to import from config.py first, fallback to environment variables
 try:

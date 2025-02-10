@@ -55,13 +55,24 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME_INFI }}
           password: ${{ secrets.DOCKERHUB_TOKEN_INFI }}
 
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ secrets.DOCKERHUB_USERNAME_INFI }}/webapp
+          tags: |
+            type=raw,value=latest
+            type=sha,prefix=
+            type=semver,pattern={{version}},value=v1.0.${{ github.run_number }}
+
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
           platforms: linux/arm64,linux/amd64
           context: "app"
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME_INFI }}/webapp:latest
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
 
   DeployImage:
     needs: BuildImage

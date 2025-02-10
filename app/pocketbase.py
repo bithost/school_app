@@ -1,5 +1,12 @@
 import requests
-from config import POCKETBASE_ADMIN_EMAIL, POCKETBASE_ADMIN_PASSWORD
+import os
+
+# Try to import from config.py first, fallback to environment variables
+try:
+    from config import POCKETBASE_ADMIN_EMAIL, POCKETBASE_ADMIN_PASSWORD
+except ImportError:
+    POCKETBASE_ADMIN_EMAIL = os.getenv('POCKETBASE_ADMIN_EMAIL')
+    POCKETBASE_ADMIN_PASSWORD = os.getenv('POCKETBASE_ADMIN_PASSWORD')
 
 class PocketBaseAuth:
     def __init__(self, base_url):
@@ -7,6 +14,9 @@ class PocketBaseAuth:
         self.token = None
         self.record = None
         self.is_valid = False
+        
+        if not all([POCKETBASE_ADMIN_EMAIL, POCKETBASE_ADMIN_PASSWORD]):
+            raise ValueError("PocketBase credentials not found in config.py or environment variables")
 
     def auth_with_password(self):
         """Authenticate with PocketBase using superuser credentials"""

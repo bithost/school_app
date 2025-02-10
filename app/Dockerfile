@@ -11,18 +11,6 @@ RUN apk update && \
     && \
     rm -rf /var/cache/apk/*
 
-# Specify multiple platforms
-# For x86_64
-#RUN dpkg --add-architecture amd64
-# For arm64
-#RUN dpkg --add-architecture arm64
-
-# Define a build argument for the API token
-# ARG STRAPI_API_TOKEN
-
-# # Set the API token as an environment variable
-# ENV STRAPI_API_TOKEN=$STRAPI_API_TOKEN
-
 # Create a non-root user and switch to it
 RUN adduser -D myuser
 USER myuser
@@ -43,5 +31,8 @@ RUN rm requirements.txt
 # Copy the current directory contents into the container at /app
 COPY --chown=myuser:myuser . .
 
-# Run the application
+# Make sure app.py is executable
+RUN chmod +x app.py
+
+# Run the application with environment variables
 CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]

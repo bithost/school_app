@@ -1,10 +1,18 @@
 # app.py
-import os
 from flask import Flask, render_template, jsonify
 from datetime import datetime
 import requests
 from pocketbase import PocketBaseAuth
-from config import *
+import os
+
+# Try to import from config.py first, fallback to environment variables
+try:
+    from config import POCKETBASE_URL
+except ImportError:
+    POCKETBASE_URL = os.getenv('POCKETBASE_URL')
+
+if not POCKETBASE_URL:
+    raise ValueError("POCKETBASE_URL not found in config.py or environment variables")
 
 app = Flask(__name__)
 

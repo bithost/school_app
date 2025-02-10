@@ -1,8 +1,11 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h2 class="subtitle is-4">{{ article_data['data']['attributes']['createdAt']|format_date }}</h2>
-    <h1 class="title">{{ article_data['data']['attributes']['title'] }}</h1>
-    <p>{{ article_data['data']['attributes']['body'] |markdown }}</p>
+    <h2 class="subtitle is-4">{{ post.created|format_date }}</h2>
+    <h1 class="title">{{ post.title }}</h1>
+    <p>{{ post.body }}</p>
+    <div class="is-size-7 has-text-grey">
+        Last updated: {{ post.updated|format_date }}
+    </div>
 {% endblock %}
 
               </div>

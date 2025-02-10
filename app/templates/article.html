@@ -1,10 +1,12 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h2 class="subtitle is-4">{{ post.created|format_date }}</h2>
-    <h1 class="title">{{ post.title }}</h1>
-    <p>{{ post.body }}</p>
-    <div class="is-size-7 has-text-grey">
-        Last updated: {{ post.updated|format_date }}
+    <div class="content">
+        <div class="is-size-5 has-text-grey" style="margin-bottom: -0.5rem;">{{ post.created|format_date }}</div>
+        <h1 class="title mb-2" style="margin-top: 0;">{{ post.title }}</h1>
+        <div class="mb-3">{{ post.body|safe }}</div>
+        <div class="is-size-7 has-text-grey mt-5">
+            Last updated: {{ post.updated|format_date }}
+        </div>
     </div>
 {% endblock %}
 

@@ -58,6 +58,7 @@ def view_post(id):
         response = requests.get(endpoint, headers=pb.get_headers())
         response.raise_for_status()
         post = response.json()
+        print(f"DEBUG - Post body: {post.get('body', '')}")  # Debug log
         return render_template('article.html', post=post)
     except Exception as e:
         return f'Error: {str(e)}', 500
@@ -68,7 +69,11 @@ def about():
     response = requests.get(endpoint, headers=pb.get_headers())
     if response.status_code == 200:
         # Get the first record since we only have one
-        about_data = response.json()['items'][0] if response.json()['items'] else None
+        data = response.json()
+        print(f"DEBUG - About response: {data}")  # Debug log
+        about_data = data['items'][0] if data.get('items') else None
+        if about_data:
+            print(f"DEBUG - About body: {about_data.get('body', '')}")  # Debug log
         return render_template('about.html', about=about_data)
     return 'Error loading about page', 500
 

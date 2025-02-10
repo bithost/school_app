@@ -74,21 +74,21 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-  DeployImage:
-    needs: BuildImage
-    runs-on: self-hosted
-    steps:
-      - name: Trigger App Deployment from Ansible repo
-        uses: convictional/trigger-workflow-and-wait@v1.6.1
-        with:
-          owner: bithost
-          repo: school_ansible
-          github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN_GH_INFI }}
-          github_user: bithost
-          workflow_file_name: ansible-manual-deploy.yml
-          ref: main
-          wait_interval: 10
-          client_payload: '{}'
-          propagate_failure: false
-          trigger_workflow: true
-          wait_workflow: true
+  # DeployImage:
+  #   needs: BuildImage
+  #   runs-on: self-hosted
+  #   steps:
+  #     - name: Trigger App Deployment from Ansible repo
+  #       uses: convictional/trigger-workflow-and-wait@v1.6.1
+  #       with:
+  #         owner: bithost
+  #         repo: school_ansible
+  #         github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN_GH_INFI }}
+  #         github_user: bithost
+  #         workflow_file_name: ansible-manual-deploy.yml
+  #         ref: main
+  #         wait_interval: 10
+  #         client_payload: '{}'
+  #         propagate_failure: false
+  #         trigger_workflow: true
+  #         wait_workflow: true

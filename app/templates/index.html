@@ -1,5 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
+    <p class="is-size-7 has-text-grey">Page {{ page }} of {{ total_pages }}</p>
+    
     {% for post in posts %}
         <div class="is-size-5 has-text-grey" style="margin-bottom: -0.5rem;">{{ post.created|format_date }}</div>
         <h1 class="title mb-2" style="margin-top: 0;">{{ post.title }}</h1>
@@ -11,75 +13,75 @@
         </a>
         <hr class="mt-5 mb-5">
     {% endfor %}
-{% endblock %}
 
+    <p class="is-size-7 has-text-grey">Total pages: {{ total_pages }}</p>
+
+    {% if total_pages > 1 %}
         <div class="is-divider"></div>
 
         <div class="container">
-        <nav class="pagination is-centered" role="navigation" aria-label="pagination">
- 
-           <a class="button bd-fat-button is-info is-light bd-pagination-prev" href="#" title="previous post">
-            <span class="icon is-left">
-              <i class="fa fa-arrow-left"></i>
-            </span>
-            <span>
-              <strong>Previous Post</strong>
-            </span>
-          </a>
+            <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+                {% if page > 1 %}
+                    <a class="pagination-previous" href="{{ url_for('home', page=page-1) }}" title="Previous page">Previous</a>
+                {% else %}
+                    <a class="pagination-previous" disabled>Previous</a>
+                {% endif %}
 
-          <a class="button bd-fat-button is-info is-light bd-pagination-prev" href="#" title="next post">
-            <strong>Next Post</strong>
-            <span class="icon is-left">
-              <i class="fa fa-arrow-right"></i>
-            </span>
-            <span>
-            </span>
-          </a>
-          </nav>
-         
-</div>
+                {% if page < total_pages %}
+                    <a class="pagination-next" href="{{ url_for('home', page=page+1) }}" title="Next page">Next</a>
+                {% else %}
+                    <a class="pagination-next" disabled>Next</a>
+                {% endif %}
 
-      </div>
-    </div>
-  </section>
+                <ul class="pagination-list">
+                    {% for p in range(1, total_pages + 1) %}
+                        <li>
+                            <a class="pagination-link {% if p == page %}is-current{% endif %}" 
+                               href="{{ url_for('home', page=p) }}" 
+                               aria-label="Page {{ p }}">
+                                {{ p }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </nav>
+        </div>
+    {% endif %}
+{% endblock %}
 
-  <footer class="footer">
+{% block footer %}
+<footer class="footer">
     <div class="content has-text-centered">
-      <p>
-        <strong>Bulma - Blog post</strong> by <a href="https://gonzalojs.com">Gonzalo Gutierrez</a>. Based on the <a
-          href="http://jigsaw-blog-staging.tighten.co/">jigsaw-blog</a>. The source code is licensed
-        <a href="http://opensource.org/licenses/mit-license.php">MIT</a>
-      </p>
+        <p>
+            <strong>Bulma - Blog post</strong> by <a href="https://gonzalojs.com">Gonzalo Gutierrez</a>. Based on the <a
+                href="http://jigsaw-blog-staging.tighten.co/">jigsaw-blog</a>. The source code is licensed
+            <a href="http://opensource.org/licenses/mit-license.php">MIT</a>
+        </p>
     </div>
-  </footer>
+</footer>
+{% endblock %}
 
-  <script>
+{% block scripts %}
+<script>
     document.addEventListener('DOMContentLoaded', () => {
+        // Get all "navbar-burger" elements
+        const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
 
-      // Get all "navbar-burger" elements
-      const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+        // Check if there are any navbar burgers
+        if ($navbarBurgers.length > 0) {
+            // Add a click event on each of them
+            $navbarBurgers.forEach(el => {
+                el.addEventListener('click', () => {
+                    // Get the target from the "data-target" attribute
+                    const target = el.dataset.target;
+                    const $target = document.getElementById(target);
 
-      // Check if there are any navbar burgers
-      if ($navbarBurgers.length > 0) {
-
-        // Add a click event on each of them
-        $navbarBurgers.forEach(el => {
-          el.addEventListener('click', () => {
-
-            // Get the target from the "data-target" attribute
-            const target = el.dataset.target;
-            const $target = document.getElementById(target);
-
-            // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-            el.classList.toggle('is-active');
-            $target.classList.toggle('is-active');
-
-          });
-        });
-      }
-
+                    // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+                    el.classList.toggle('is-active');
+                    $target.classList.toggle('is-active');
+                });
+            });
+        }
     });
-  </script>
-
-</body>
-</html>
+</script>
+{% endblock %}

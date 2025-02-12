@@ -1,5 +1,5 @@
 # app.py
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request
 from datetime import datetime
 import requests
 from pocketbase import PocketBaseAuth
@@ -45,14 +45,31 @@ app.jinja_env.filters['format_date'] = format_date
 
 @app.route('/')
 def home():
+    page = request.args.get('page', 1, type=int)
+    per_page = 5
     endpoint = f'{pb.base_url}/api/collections/posts/records'
     
     try:
-        response = requests.get(endpoint, headers=pb.get_headers())
+        params = {
+            'page': page,
+            'perPage': per_page,
+            'sort': '-created'
+        }
+        response = requests.get(endpoint, headers=pb.get_headers(), params=params)
         response.raise_for_status()
-        posts = response.json()
-        return render_template('index.html', posts=posts.get('items', []))
+        data = response.json()
+        posts = data.get('items', [])
+        total_items = data.get('totalItems', 0)
+        total_pages = -(-total_items // per_page)  # Ceiling division
+        
+        print(f"Total items: {total_items}")
+        print(f"Total pages: {total_pages}")
+        print(f"Current page: {page}")
+        print(f"Number of posts on this page: {len(posts)}")
+        
+        return render_template('index.html', posts=posts, page=page, total_pages=total_pages)
     except Exception as e:
+        print(f"Error: {str(e)}")
         return f'Error: {str(e)}', 500
 
 @app.route('/post/<string:id>')

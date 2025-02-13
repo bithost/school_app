@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<div class="columns">
+<div class="columns" style="margin-left: -5%; width: 105%;">
     <div class="column is-one-quarter">
         {% include 'documentation/sidebar.html' %}
     </div>
@@ -11,7 +11,7 @@
             {% for post in posts %}
             <div class="is-size-7 has-text-grey mb-3">{{ post.created|format_date }}</div>
             <h4 class="title mb-3 mt-3">{{ post.title }}</h4>
-                 <p class="mb-3">{{ post.body|truncate(200) | safe }}</p> 
+                 <p class="mb-3">{{ post.body|truncate(50) | safe }}</p> 
                 <a class="button bd-fat-button is-info is-light bd-pagination-prev" href="{{ url_for('view_doc_post', id=post.id) }}" title="read post">
                     <span>
                         <strong>Read More</strong>
@@ -21,7 +21,17 @@
             {% endfor %}
         {% else %}
             <h1 class="title">Welcome to the Documentation</h1>
-            <p>You will find all the documentation here about the project. Will try to keep it up to date and explain what is going on.</p>
+            <p>You will find all the documentation here about the project. We will try to keep it up to date and explain what is going on.</p>
+            <p>There are 3 main components here:</p>
+            <ol>
+                <li>Flask Application</li>
+                <li>Pocketbase as a database</li>
+                <li>n8n as AI agent running on remote server</li>
+            </ol>
+            <figure class="image">
+                <img src="{{ url_for('static', filename='images/flow.png') }}" alt="Project Flow Diagram">
+                <figcaption class="has-text-centered">Project Flow Diagram</figcaption>
+            </figure>
         {% endif %}
     </div>
 </div>

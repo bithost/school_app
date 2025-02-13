@@ -6,6 +6,7 @@ from pocketbase import PocketBaseAuth
 import os
 import logging
 
+
 # Configure logging to only show access logs without request body
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.INFO)
@@ -42,6 +43,7 @@ def format_date(value, format='%b %d, %Y'):
             return value
 
 app.jinja_env.filters['format_date'] = format_date
+
 
 @app.route('/')
 def home():
@@ -93,6 +95,35 @@ def about():
         about_data = response.json()['items'][0] if response.json()['items'] else None
         return render_template('about.html', about=about_data)
     return 'Error loading about page', 500
+
+# Documentation routes
+
+@app.route('/documentation/')
+@app.route('/documentation/<tag>')
+def doc_home(tag=None):
+    tags_response = requests.get(f'{pb.base_url}/api/collections/documentation/records', headers=pb.get_headers())
+    tags = tags_response.json().get('items', [])
+
+    posts = []
+    if tag:
+        posts_response = requests.get(
+            f'{pb.base_url}/api/collections/documentation_posts/records',
+            params={'filter': f'tag="{tag}"'},
+            headers=pb.get_headers()
+        )
+        posts = posts_response.json().get('items', [])
+
+    return render_template('documentation/home.html', tags=tags, posts=posts, selected_tag=tag)
+
+@app.route('/documentation/post/<id>')
+def view_doc_post(id):
+    post_response = requests.get(f'{pb.base_url}/api/collections/documentation_posts/records/{id}', headers=pb.get_headers())
+    post = post_response.json()
+
+    tags_response = requests.get(f'{pb.base_url}/api/collections/documentation/records', headers=pb.get_headers())
+    tags = tags_response.json().get('items', [])
+
+    return render_template('documentation/post.html', post=post, tags=tags)
 
 if __name__ == '__main__':
     app.run(debug=False, host='0.0.0.0')

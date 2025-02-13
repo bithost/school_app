@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="columns">
+    <div class="column is-one-quarter">
+        {% include 'documentation/sidebar.html' %}
+    </div>
+    <div class="column">
+        {% if selected_tag %}
+            <h1 class="title mb-6">{{ selected_tag }}</h1>
+            {% for post in posts %}
+            <div class="is-size-7 has-text-grey mb-3">{{ post.created|format_date }}</div>
+            <h4 class="title mb-3 mt-3">{{ post.title }}</h4>
+                 <p class="mb-3">{{ post.body|truncate(200) | safe }}</p> 
+                <a class="button bd-fat-button is-info is-light bd-pagination-prev" href="{{ url_for('view_doc_post', id=post.id) }}" title="read post">
+                    <span>
+                        <strong>Read More</strong>
+                    </span>
+                </a>
+                <hr class="mt-5 mb-5">
+            {% endfor %}
+        {% else %}
+            <h1 class="title">Welcome to the Documentation</h1>
+            <p>You will find all the documentation here about the project. Will try to keep it up to date and explain what is going on.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

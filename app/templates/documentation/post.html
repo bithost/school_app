@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="columns">
+    <div class="column is-one-quarter">
+        {% include 'documentation/sidebar.html' %}
+    </div>
+    <div class="column">
+        <h1 class="title">{{ post.title }}</h1>
+        <div class="content">
+            {{ post.body|safe }}
+        </div>
+        <p class="has-text-grey">Last updated: {{ post.updated|format_date }}</p>
+        <a href="{{ url_for('doc_home', tag=post.tag) }}" class="button is-light">Back to {{ post.tag }}</a>
+    </div>
+</div>
+{% endblock %}

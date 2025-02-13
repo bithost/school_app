@@ -6,7 +6,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Lanlab Blog </title>
+  <title>Lanlab AI Blog </title>
   <link rel="stylesheet" href="https://unpkg.com/bulma@0.9.4/css/bulma.min.css" />
   <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
     integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
@@ -38,7 +38,7 @@
           <span class="icon is-large">
             <i class="fa fa-code fa-lg"></i>
           </span>
-          <span class="has-text-weight-bold is-size-4 ml-2">LanLab</span>
+          <span class="has-text-weight-bold is-size-4 ml-2">LanLab AI Blog</span>
         </a>
         <span class="navbar-burger burger" data-target="navbarMenu">
           <span></span>
@@ -56,10 +56,13 @@
               </span>
             </div>
           </div>
+          <a class="navbar-item is-active is-size-5 has-text-weight-semibold"  href="{{ url_for('home') }}">
+            Home
+          </a>
           <a class="navbar-item is-active is-size-5 has-text-weight-semibold"  href="/about">
             About
           </a>
-           <a class="navbar-item is-size-5 has-text-weight-semibold" href="https://docs.lanlab.xyz/" target="_blank">
+           <a class="navbar-item is-size-5 has-text-weight-semibold" href="{{ url_for('doc_home') }}">
             Documentation
           </a>
           <!-- <a class="navbar-item is-size-5 has-text-weight-semibold">

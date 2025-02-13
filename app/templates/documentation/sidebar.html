@@ -1,0 +1,10 @@
+<aside class="menu">
+    <p class="menu-label">
+        Documentation
+    </p>
+    <ul class="menu-list">
+        {% for tag in tags %}
+            <li><a href="{{ url_for('doc_home', tag=tag.tag) }}" {% if tag.tag == selected_tag %}class="is-active"{% endif %}>{{ tag.tag }}</a></li>
+        {% endfor %}
+    </ul>
+</aside>

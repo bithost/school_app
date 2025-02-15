@@ -1,11 +1,9 @@
 # app.py
 from flask import Flask, render_template, jsonify, request
 from datetime import datetime
-import requests
 from pocketbase import PocketBaseAuth
 import os
 import logging
-
 
 # Configure logging to only show access logs without request body
 log = logging.getLogger('werkzeug')
@@ -22,12 +20,8 @@ if not POCKETBASE_URL:
 
 app = Flask(__name__)
 
-# Initialize PocketBase and authenticate
+# Initialize PocketBase
 pb = PocketBaseAuth(POCKETBASE_URL)
-auth_result = pb.auth_with_password()
-
-if not auth_result:
-    print("Failed to authenticate with PocketBase")
 
 # Custom Jinja filter for formatting dates
 def format_date(value, format='%b %d, %Y'):
@@ -44,12 +38,11 @@ def format_date(value, format='%b %d, %Y'):
 
 app.jinja_env.filters['format_date'] = format_date
 
-
 @app.route('/')
 def home():
     page = request.args.get('page', 1, type=int)
     per_page = 5
-    endpoint = f'{pb.base_url}/api/collections/posts/records'
+    endpoint = '/api/collections/posts/records'
     
     try:
         params = {
@@ -57,7 +50,7 @@ def home():
             'perPage': per_page,
             'sort': '-created'
         }
-        response = requests.get(endpoint, headers=pb.get_headers(), params=params)
+        response = pb.get(endpoint, params=params)
         response.raise_for_status()
         data = response.json()
         posts = data.get('items', [])
@@ -76,10 +69,10 @@ def home():
 
 @app.route('/post/<string:id>')
 def view_post(id):
-    endpoint = f'{pb.base_url}/api/collections/posts/records/{id}'
+    endpoint = f'/api/collections/posts/records/{id}'
     
     try:
-        response = requests.get(endpoint, headers=pb.get_headers())
+        response = pb.get(endpoint)
         response.raise_for_status()
         post = response.json()
         return render_template('article.html', post=post)
@@ -88,8 +81,8 @@ def view_post(id):
 
 @app.route('/about')
 def about():
-    endpoint = f'{pb.base_url}/api/collections/about/records'
-    response = requests.get(endpoint, headers=pb.get_headers())
+    endpoint = '/api/collections/about/records'
+    response = pb.get(endpoint)
     if response.status_code == 200:
         # Get the first record since we only have one
         about_data = response.json()['items'][0] if response.json()['items'] else None
@@ -101,15 +94,14 @@ def about():
 @app.route('/documentation/')
 @app.route('/documentation/<tag>')
 def doc_home(tag=None):
-    tags_response = requests.get(f'{pb.base_url}/api/collections/documentation/records', headers=pb.get_headers())
+    tags_response = pb.get('/api/collections/documentation/records')
     tags = tags_response.json().get('items', [])
 
     posts = []
     if tag:
-        posts_response = requests.get(
-            f'{pb.base_url}/api/collections/documentation_posts/records',
-            params={'filter': f'tag="{tag}"'},
-            headers=pb.get_headers()
+        posts_response = pb.get(
+            '/api/collections/documentation_posts/records',
+            params={'filter': f'tag="{tag}"'}
         )
         posts = posts_response.json().get('items', [])
 
@@ -117,10 +109,10 @@ def doc_home(tag=None):
 
 @app.route('/documentation/post/<id>')
 def view_doc_post(id):
-    post_response = requests.get(f'{pb.base_url}/api/collections/documentation_posts/records/{id}', headers=pb.get_headers())
+    post_response = pb.get(f'/api/collections/documentation_posts/records/{id}')
     post = post_response.json()
 
-    tags_response = requests.get(f'{pb.base_url}/api/collections/documentation/records', headers=pb.get_headers())
+    tags_response = pb.get('/api/collections/documentation/records')
     tags = tags_response.json().get('items', [])
 
     return render_template('documentation/post.html', post=post, tags=tags)

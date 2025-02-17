@@ -5,7 +5,7 @@
     {% for post in posts %}
         <div class="is-size-5 has-text-grey" style="margin-bottom: -0.5rem;">{{ post.created|format_date }}</div>
         <h1 class="title mb-2" style="margin-top: 0;">{{ post.title }}</h1>
-        <p class="mb-3">{{ post.short_body }}</p>
+        <p class="mb-3">{{ post.short_body | safe }}</p>
         <a class="button bd-fat-button is-info is-light bd-pagination-prev" href="{{ url_for('view_post', id=post.id) }}" title="read post">
             <span>
                 <strong>Read More</strong>

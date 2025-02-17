@@ -1,8 +1,8 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<div class="columns" style="margin-left: -25%; width: 105%;">
-    <div class="column is-one-quarter">
+<div class="columns" style="margin-left: -25%; width: 145%;">
+    <div class="column is-one-quarter" style="max-width: 15%;">
         {% include 'documentation/sidebar.html' %}
     </div>
     <div class="column">
@@ -11,7 +11,7 @@
             {% for post in posts %}
             <div class="is-size-7 has-text-grey mb-3">{{ post.created|format_date }}</div>
             <h4 class="title mb-3 mt-3">{{ post.title }}</h4>
-                 <p class="mb-3">{{ post.body|truncate(50) | safe }}</p> 
+                <!-- <p class="mb-3">{{ post.body|truncate(50) | safe }}</p> -->
                 <a class="button bd-fat-button is-info is-light bd-pagination-prev" href="{{ url_for('view_doc_post', id=post.id) }}" title="read post">
                     <span>
                         <strong>Read More</strong>

@@ -1,11 +1,11 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<div class="columns" style="margin-left: -25%; width: 105%;">
-    <div class="column is-one-quarter">
+<div class="columns" style="margin-left: -25%; width: 145%;">
+    <div class="column is-one-quarter" style="max-width: 15%;">
         {% include 'documentation/sidebar.html' %}
     </div>
-    <div class="column">
+    <div class="column is-five-sixths">
         <h1 class="title">{{ post.title }}</h1>
         <div class="content">
             {{ post.body|safe }}

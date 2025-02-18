@@ -9,6 +9,10 @@ on:
 jobs:
   test:
     runs-on: self-hosted
+    env:
+      POCKETBASE_URL: ${{ vars.POCKETBASE_URL }}
+      POCKETBASE_ADMIN_EMAIL: ${{ vars.POCKETBASE_ADMIN_EMAIL }}
+      POCKETBASE_ADMIN_PASSWORD: ${{ secrets.POCKETBASE_ADMIN_PASSWORD }}
 
     steps:
     - uses: actions/checkout@v3

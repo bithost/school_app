@@ -15,29 +15,30 @@ def test_home_page(client):
 def test_app_running():
     assert app.name == 'app'
 
-def test_create_and_delete_test_record(client):
+def test_create_and_delete_test_record():
     # Test data
     test_data = {
         "field": "Test Record"
-
     }
     
     # Create record
-    create_response = client.post('/api/collections/test/records', json=test_data)
+    create_response = pb.post('/api/collections/test/records', json=test_data)
     assert create_response.status_code == 200
     
     # Get the created record data
     record_data = create_response.json()
-    assert record_data['title'] == test_data['title']
-    assert record_data['description'] == test_data['description']
+    assert record_data['field'] == test_data['field']
+    assert 'id' in record_data
+    assert 'created' in record_data
+    assert 'updated' in record_data
     
     # Store the record ID
     record_id = record_data['id']
     
     # Delete the record
-    delete_response = client.delete(f'/api/collections/test/records/{record_id}')
+    delete_response = pb.delete(f'/api/collections/test/records/{record_id}')
     assert delete_response.status_code == 204
     
     # Verify the record is deleted
-    get_response = client.get(f'/api/collections/test/records/{record_id}')
+    get_response = pb.get(f'/api/collections/test/records/{record_id}')
     assert get_response.status_code == 404

@@ -25,16 +25,9 @@ jobs:
     - name: Create config.py
       run: |
         cd app
-        echo "# Configuration for PocketBase" > config.py
-        echo "POCKETBASE_URL = '${{ vars.POCKETBASE_URL }}'" >> config.py
+        echo "POCKETBASE_URL = '${{ vars.POCKETBASE_URL }}'" > config.py
         echo "POCKETBASE_ADMIN_EMAIL = '${{ vars.POCKETBASE_ADMIN_EMAIL }}'" >> config.py
         echo "POCKETBASE_ADMIN_PASSWORD = '${{ secrets.POCKETBASE_ADMIN_PASSWORD }}'" >> config.py
-        echo "Config file contents:"
-        cat config.py
-        echo "File permissions:"
-        ls -l config.py
-        echo "Python can import?"
-        python -c "import config; print('URL:', config.POCKETBASE_URL); print('EMAIL:', config.POCKETBASE_ADMIN_EMAIL)"
         
     - name: Install dependencies
       run: |

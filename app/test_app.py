@@ -18,8 +18,8 @@ def test_app_running():
 def test_create_and_delete_test_record(client):
     # Test data
     test_data = {
-        "title": "Test Record",
-        "description": "This is a test record"
+        "field": "Test Record"
+
     }
     
     # Create record
